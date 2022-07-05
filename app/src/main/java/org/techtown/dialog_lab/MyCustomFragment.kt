@@ -1,20 +1,23 @@
 package org.techtown.dialog_lab
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.system.Os.close
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import org.techtown.dialog_lab.databinding.FragmentMyCustomBinding
+import java.lang.ClassCastException
 import java.nio.file.Files.delete
 
-class MyCustomFragment(val customFragmentListener: MyCustomFragmentListener) : DialogFragment() {
+class MyCustomFragment : DialogFragment() {
     private var _binding: FragmentMyCustomBinding? = null
     private val binding get() = _binding ?: error("null값 들어감")
-
+    internal lateinit var customFragmentListener: MyCustomFragmentListener
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,6 +37,15 @@ class MyCustomFragment(val customFragmentListener: MyCustomFragmentListener) : D
         save()
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        try {
+            customFragmentListener = context as MyCustomFragmentListener
+        } catch (e: ClassCastException) {
+            Log.e(TAG, "onAttach: $context must implement MyCustomFragmentListener")
+        }
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

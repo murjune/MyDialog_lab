@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity(), MyCustomFragment.MyCustomFragmentListe
         binding.btnDialog.setOnClickListener {
             Log.d(TAG, "MainActivity - onDialogButtonClick() called")
             // Create an instance of the dialog fragment and show it
-            val dialog = MyCustomFragment(this)
+            val dialog = MyCustomFragment()
             dialog.show(supportFragmentManager, MYCUSTOMFRAGMENT_TAG)
         }
     }
